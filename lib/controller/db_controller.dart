@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../model/todo_model.dart';
+
 class SQLController extends GetxController {
   @override
   void onInit() {
@@ -10,15 +12,18 @@ class SQLController extends GetxController {
     createDatabase();
   }
 
+  Database? db;
+  List<TodoModel> list = [];
   void createDatabase() async {
     var dbpath = await getDatabasesPath();
-    String path = join(dbpath, "todo.db");
+    String path = join(dbpath, "todo1.db");
     OpenAppDatabase(path: path);
   }
 
   void OpenAppDatabase({required String path}) async {
     Database database = await openDatabase(path,
         onOpen: (database) {
+          db = database;
           debugPrint("Database Opened");
         },
         version: 1,
@@ -31,13 +36,29 @@ class SQLController extends GetxController {
 
   void deleteTheDatabase() async {
     var bdpath = await getDatabasesPath();
-    String path = join(bdpath, "todo.db");
+    String path = join(bdpath, "todo1.db");
     await deleteDatabase(path);
     debugPrint("Database Deleted");
   }
 
-  void InsertData() {}
+  void InsertData() async{
+    var insert =await db?.insert("todo",
+        {"title": "1st data", "description": "1st description", "isDone": 0});
+    debugPrint("$insert Data Inserted");
+    GetData();
+  }
+
   void UpdateData() {}
   void DeleteData() {}
-  void GetData() {}
+  void GetData() async{
+    var all_data = await db?.query("todo",orderBy: "id DESC",);
+    list.clear();
+    for(var i in all_data!){
+      print(i);
+      list.add(TodoModel.fromJson(i));
+    }
+    print(all_data);
+    print(list.length);
+    update();
+  }
 }

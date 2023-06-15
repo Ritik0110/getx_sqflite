@@ -21,7 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(onPressed: (){
             controller.deleteTheDatabase();
-          }, icon: const Icon(Icons.remove,size: 20,color: Colors.white,))
+          }, icon: const Icon(Icons.remove,size: 20,color: Colors.white,)),
+          SizedBox(width: 5,),
+          IconButton(onPressed: (){
+            controller.InsertData();
+          }, icon: const Icon(Icons.add,size: 20,color: Colors.white,)),
         ],
       ),
     );
