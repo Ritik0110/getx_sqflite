@@ -12,6 +12,7 @@ class SQLController extends GetxController {
     createDatabase();
   }
 
+  final updatetext = TextEditingController();
   Database? db;
   List<TodoModel> list = [];
   void createDatabase() async {
@@ -32,6 +33,7 @@ class SQLController extends GetxController {
               "CREATE TABLE todo (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, isDone INTEGER)");
           debugPrint("Database Created");
         });
+    debugPrint(database.toString());
   }
 
   void deleteTheDatabase() async {
@@ -48,10 +50,22 @@ class SQLController extends GetxController {
     GetData();
   }
 
-  void UpdateData() {}
-  void DeleteData() {}
+  void UpdateData() async{
+    var updatedata =await db?.update("todo", {
+      "title":"2nd data",
+      "description":"2nd description",
+      "isDone":3
+    }, where: "id = ${updatetext.text}");
+    debugPrint("$updatedata Data Updated");
+    GetData();
+  }
+  void DeleteData() async{
+    var deletetext =await db?.delete("todo",where: "id = ${updatetext.text}");
+    debugPrint("$deletetext Data Deleted");
+    GetData();
+  }
   void GetData() async{
-    var all_data = await db?.query("todo",orderBy: "id DESC",);
+    var all_data = await db?.query("todo");
     list.clear();
     for(var i in all_data!){
       print(i);

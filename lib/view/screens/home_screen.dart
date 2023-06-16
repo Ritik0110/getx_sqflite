@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final SQLController controller =Get.find();
+  final SQLController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +19,49 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("Todo App"),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: (){
-            controller.deleteTheDatabase();
-          }, icon: const Icon(Icons.remove,size: 20,color: Colors.white,)),
-          SizedBox(width: 5,),
-          IconButton(onPressed: (){
-            controller.InsertData();
-          }, icon: const Icon(Icons.add,size: 20,color: Colors.white,)),
+          IconButton(
+              onPressed: () {
+                controller.deleteTheDatabase();
+              },
+              icon: const Icon(
+                Icons.remove,
+                size: 20,
+                color: Colors.white,
+              )),
+          SizedBox(
+            width: 5,
+          ),
+          IconButton(
+              onPressed: () {
+                controller.InsertData();
+              },
+              icon: const Icon(
+                Icons.add,
+                size: 20,
+                color: Colors.white,
+              )),
+        ],
+      ),
+      body: Column(
+        children: [
+
+          TextField(
+            controller: controller.updatetext,
+          ),
+          Center(
+            child: TextButton(
+                child: const Text("Update Data"),
+                onPressed: () {
+                  controller.UpdateData();
+                }),
+          ),
+          Center(
+            child: TextButton(
+                child: const Text("delete Data"),
+                onPressed: () {
+                  controller.DeleteData();
+                }),
+          ),
         ],
       ),
     );
