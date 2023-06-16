@@ -1,20 +1,20 @@
 class TodoModel {
   final int id;
-  final String title;
-  final String description;
-  final int isDone;
+  final String name;
+  final String emailId;
+  final int age;
 
   TodoModel(
       {required this.id,
-      required this.title,
-      required this.description,
-      required this.isDone});
+      required this.name,
+      required this.emailId,
+      required this.age});
 
   factory TodoModel.fromJson(Map<String, dynamic> json) {
     return TodoModel(
         id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        isDone: json["isDone"]);
+        name: json["name"],
+        emailId: json["emailId"],
+        age: json["age"]);
   }
 }
